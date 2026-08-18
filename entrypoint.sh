@@ -1,11 +1,18 @@
 #!/bin/sh
 set -e
 
-# Detect Railway's expected port
+# Use Railway's PORT env var, default to 8080
 RAILWAY_PORT="${PORT:-8080}"
 
-# Substitute PORT in nginx config
-sed -i "s/listen 8080/listen ${RAILWAY_PORT}/g" /etc/nginx/nginx.conf
+echo "=== ENTRYPOINT START ==="
+echo "Railway PORT: ${RAILWAY_PORT}"
+echo "Substituting __PORT__ in nginx.conf..."
+
+# Substitute the placeholder with the actual port
+sed -i "s/listen __PORT__/listen ${RAILWAY_PORT}/g" /etc/nginx/nginx.conf
+
+echo "nginx.conf after substitution:"
+grep "listen " /etc/nginx/nginx.conf
 
 echo "Starting php-fpm..."
 php-fpm --allow-to-run-as-root -D
