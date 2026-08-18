@@ -5,8 +5,9 @@ WORKDIR /app
 # Copy all files
 COPY . /app/
 
-# Expose port
+# Railway will set PORT env var, default to 8080 if not set
+# EXPOSE is documentation; Railway's network layer detects via PORT
 EXPOSE 8080
 
-# Start PHP built-in server (no router needed - index.php handles everything)
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t ."]
+# Use exec form so PHP gets the correct PORT signal
+CMD ["sh", "-c", "echo \"PORT=$PORT\" && php -S 0.0.0.0:${PORT:-8080} -t . > /tmp/php-server.log 2>&1"]
