@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Router for PHP built-in server
 // - Serve static files directly
 // - Fall back to index.php for everything else
