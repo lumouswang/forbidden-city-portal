@@ -11,12 +11,12 @@ COPY . /app/
 # Copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port (Railway will set PORT env var)
-EXPOSE 8080
+# Make sure runtime dirs exist
+RUN mkdir -p /tmp /var/log/nginx && \
+    chown -R nginx:nginx /var/log/nginx 2>/dev/null || true
 
-# Make sure runtime dirs exist with correct perms
-RUN mkdir -p /var/run /var/log/nginx /var/lib/nginx/tmp /run/nginx && \
-    chown -R nginx:nginx /var/run /var/log/nginx /var/lib/nginx /run/nginx 2>/dev/null || true
+# Expose common ports Railway may use
+EXPOSE 80 8080
 
-# Start php-fpm, then nginx in foreground
+# Start php-fpm, then nginx in foreground (listens on both 80 and 8080)
 CMD ["sh", "-c", "php-fpm --allow-to-run-as-root -D && nginx -g 'daemon off;'"]
