@@ -8,5 +8,5 @@ COPY . /app/
 # Expose port
 EXPOSE 8080
 
-# Start PHP built-in server
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t . server.php"]
+# Start PHP built-in server (no router needed - index.php handles everything)
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t ."]
