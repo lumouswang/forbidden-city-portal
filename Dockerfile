@@ -1,12 +1,18 @@
-FROM php:8.2-cli
+FROM php:8.2-fpm-alpine
+
+# Install nginx
+RUN apk add --no-cache nginx
 
 WORKDIR /app
 
 # Copy all files
 COPY . /app/
 
-# Expose port (documentation; Railway sets PORT env var)
+# Copy nginx config
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose port
 EXPOSE 8080
 
-# Run PHP built-in server in foreground, logs go to stdout (visible in Railway Deploy Logs)
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t ."]
+# Start php-fpm in background, then start nginx in foreground
+CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
