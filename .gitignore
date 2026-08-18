@@ -1,0 +1,28 @@
+﻿# 调试和备份
+.trash/
+*.bak
+*.broken.*
+DIAGNOSE_*.txt
+_*
+
+# 部署脚本（不应该上传到仓库）
+deploy-*.ps1
+deploy-*.sh
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 日志
+*.log
+
+# 环境变量
+.env
+.env.local

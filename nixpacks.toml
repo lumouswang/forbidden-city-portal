@@ -1,0 +1,14 @@
+[start]
+cmd = "php -S 0.0.0.0:$PORT -t ."
+
+[providers]
+php = "8.3"
+
+[phases.setup]
+nixPkgs = ["php83", "nodejs_18"]
+
+[phases.install]
+cmds = []
+
+[phases.build]
+cmds = []
