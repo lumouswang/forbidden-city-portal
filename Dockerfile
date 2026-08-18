@@ -8,5 +8,5 @@ COPY . /app/
 # Expose port
 EXPOSE 8080
 
-# Start PHP built-in server WITHOUT router (default behavior works perfectly)
-CMD ["sh", "-c", "exec php -S 0.0.0.0:${PORT:-8080} -t ."]
+# Use wrapper script that auto-restarts PHP server if it dies
+CMD ["sh", "/app/start.sh"]
